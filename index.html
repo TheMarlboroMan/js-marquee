@@ -1,0 +1,67 @@
+<!DOCTYPE html5>
+<html>
+<head>
+<style type="text/css">
+#container table {border:none; border-collapse: collapse;}
+#container table td {min-width: 20px; min-height: 20px; line-height: 20px; border: none; border-radius: 10px;}
+#container table td.empty {background: transparent;}
+#container table td.active {background: red;}
+
+</style>
+</head>
+<body>
+	<div id="container"></div>
+</body>
+<script type="text/javascript" src="marquee.js"></script>
+<script type="text/javascript">
+var m=new marquee(3, 5);
+m.create(document.getElementById('container'));
+
+let magic_strings=[
+"x x\n\
+x x\n\
+xxx\n\
+x x\n\
+x x",
+"xxx\n\
+x  \n\
+xx \n\
+x  \n\
+xxx",
+"x  \n\
+x  \n\
+x  \n\
+x  \n\
+xxx",
+"x  \n\
+x  \n\
+x  \n\
+x  \n\
+xxx",
+"xxx\n\
+x x\n\
+x x\n\
+x x\n\
+xxx"];
+
+
+let index=0;
+
+//MAXIMUM SUCKAGE!!!
+function step() {
+	m.apply_to_all((_item) => {_item.className='empty';});
+	setTimeout( () => {
+		m.apply_to_collection(
+			m.collection_from_string(magic_strings[index++]), 
+			(_item) => {_item.className='active';});
+
+		if(index <= magic_strings.length-1) {
+			setTimeout(() => {step();}, 500);
+		}
+	}, 1000);
+}
+
+step();
+</script>
+</html>
+
