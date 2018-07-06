@@ -2,20 +2,33 @@ function marquee(_w, _h) {
 	this.w=_w;
 	this.h=_h;
 	this.table=document.createElement('table');
+	this.callback_cell_content=null;
 }
 
 marquee.prototype={
 
+	set_callback_cell_content : function(_cb) {
+
+		this.callback_cell_content=_cb;
+	},
+
 	create : function(_container) {
 
-		let create_row=function(_t) {
+		let create_row=(_t) => {
 			let r=document.createElement('tr');
 			_t.appendChild(r);
 			return r;
 		};
-		let create_cell=function(_r) {
+
+		let create_cell=(_r) => {
 			let c=document.createElement('td');
-			c.innerHTML='&nbsp;';
+			if(null!==this.callback_cell_content) {
+				this.callback_cell_content(c);
+			}
+			else {
+				c.innerHTML='&nbsp;';
+			}
+
 			_r.appendChild(c);
 		}
 
@@ -53,7 +66,7 @@ marquee.prototype={
 			}
 			y++;
 		}
-		
+
 //		this.table.rows.forEach((_row) => {
 //			_row.cells.forEach((_cell) => {
 //				_f(_cell);
@@ -99,4 +112,3 @@ marquee.prototype={
 		return result;
 	}
 };
-
